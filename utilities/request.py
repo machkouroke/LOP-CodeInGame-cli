@@ -1,6 +1,6 @@
 import json
 
-from variables import CONFIG_PATH
+from utilities.variables import CONFIG_PATH
 
 
 def get_token() -> str:

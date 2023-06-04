@@ -4,7 +4,7 @@ from typing import Annotated
 import requests
 import typer
 
-from ..generator.index import generator
+from generator import generator
 from model.Exercise import Exercise
 from utilities.request import get_headers
 from utilities.variables import get_base_url
