@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
+from pydantic import BaseModel, Field
 
 from enumerations.main import *
 
 
 @dataclass
-class Exercise:
+class Exercise(BaseModel):
     id: str
     name: str
     language: ProgramingLanguage

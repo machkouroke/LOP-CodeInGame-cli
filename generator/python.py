@@ -14,7 +14,7 @@ class TestMain(unittest.TestCase):
 """
 class PythonGenerator(AbstractGenerator):
     def __init__(self, path: str, exercise: Exercise):
-        super().__init__(path, exercise)
+        super().__init__(exercise)
         self.main_content = main_content
         self.test_content = test_content
     def generate(self):

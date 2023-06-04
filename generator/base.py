@@ -6,8 +6,8 @@ from abc import ABC, abstractmethod
 
 
 class AbstractGenerator(ABC):
-    def __init__(self, path: str, exercise: Exercise):
-        self.base_path = Path(path)
+    def __init__(self, exercise: Exercise):
+        self.base_path = Path(exercise.name)
         self.base_path.mkdir(exist_ok=True)
         self.exercise = exercise
         self.main_content: str = ""

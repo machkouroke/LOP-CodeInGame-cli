@@ -26,8 +26,7 @@ def lopgenerate(
     if response.status_code == 200:
         try:
             data = Exercise(**response.json())
-            print(data)
-            # generator[data["language"]](data.get("name", None))
+            generator[data.language.value](exercise=data)
         except FileExistsError:
             print("Le répertoire existe déjà")
     else:

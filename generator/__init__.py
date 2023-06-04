@@ -1,5 +1,8 @@
+from typing import Type
+
+from generator.base import AbstractGenerator
 from generator.python import PythonGenerator
 
-generator = {
+generator: dict[str,  Type[AbstractGenerator]] = {
     "Python": PythonGenerator,
 }
