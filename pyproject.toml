@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lop-codeingame-cli"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 authors = ["machkouroke <machkour20.mo1@gmail.com>"]
 license = "MIT"
