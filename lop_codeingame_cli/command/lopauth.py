@@ -5,7 +5,7 @@ import re
 
 import requests
 import typer
-from utilities.variables import get_base_url, APP_PATH, CONFIG_PATH
+from lop_codeingame_cli.utilities.variables import get_base_url, APP_PATH, CONFIG_PATH
 
 
 def save_token_locally(token: str) -> None:

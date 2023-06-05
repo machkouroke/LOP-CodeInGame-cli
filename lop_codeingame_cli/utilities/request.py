@@ -3,8 +3,8 @@ from pathlib import Path
 
 import requests
 
-from model.Exercise import Exercise
-from utilities.variables import CONFIG_PATH, get_base_url
+from lop_codeingame_cli.model.Exercise import Exercise
+from lop_codeingame_cli.utilities.variables import CONFIG_PATH, get_base_url
 
 
 def get_token() -> str:

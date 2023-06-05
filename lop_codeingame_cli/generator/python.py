@@ -1,5 +1,5 @@
-from generator.base import AbstractGenerator
-from model.Exercise import Exercise
+from lop_codeingame_cli.generator.base import AbstractGenerator
+from lop_codeingame_cli.model.Exercise import Exercise
 
 main_content= """
 def main():

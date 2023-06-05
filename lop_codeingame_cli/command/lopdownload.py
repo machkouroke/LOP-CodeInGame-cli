@@ -6,9 +6,9 @@ from typing import Annotated
 import requests
 import typer
 
-from utilities.file import from_zip
-from utilities.request import get_exercise_data, get_headers
-from utilities.variables import get_base_url
+from lop_codeingame_cli.utilities.file import from_zip
+from lop_codeingame_cli.utilities.request import get_exercise_data, get_headers
+from lop_codeingame_cli.utilities.variables import get_base_url
 
 
 class DownloadKind(str, Enum):
@@ -33,7 +33,7 @@ def lopdownload(
         print("Une erreur est survenue lors du téléchargement du fichier: " + response.json()["detail"])
 
 
-# TODO Rename this here and in `lopdownload`
+
 def extract_zip_file(response, base_path):
     download_link = response.json()["download_link"]
     response = requests.get(download_link, stream=True)
@@ -44,7 +44,8 @@ def extract_zip_file(response, base_path):
     zip_path.unlink()
     print(f"Le fichier a été téléchargé dans {base_path}")
 
-
+def run():
+    typer.run(lopdownload)
 
 if __name__ == '__main__':
-    typer.run(lopdownload)
+    run()

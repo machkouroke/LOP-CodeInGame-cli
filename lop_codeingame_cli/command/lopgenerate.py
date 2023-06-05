@@ -1,14 +1,13 @@
 from enum import Enum
-from pprint import pprint
 from typing import Annotated
 
 import requests
 import typer
 
-from generator import generator
-from model.Exercise import Exercise
-from utilities.request import get_headers
-from utilities.variables import get_base_url
+from lop_codeingame_cli.generator import generator
+from lop_codeingame_cli.model.Exercise import Exercise
+from lop_codeingame_cli.utilities.request import get_headers
+from lop_codeingame_cli.utilities.variables import get_base_url
 
 
 class Language(str, Enum):

@@ -1,7 +1,7 @@
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from enumerations.main import *
+from lop_codeingame_cli.enumerations.main import ProgramingLanguage, ExerciseKind
 
 
 class Exercise(BaseModel):

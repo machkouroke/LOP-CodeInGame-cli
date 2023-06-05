@@ -1,12 +1,10 @@
 import os
 import zipfile
 from pathlib import Path
-import json
 import requests
 from tqdm import tqdm
 from websocket import WebSocket
 
-from model.Exercise import Exercise
 
 def read_file_in_chunks(file_path: Path, chunk_size: int = 1024*1024):
     with open(file_path, "rb") as file:

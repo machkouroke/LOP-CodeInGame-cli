@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from model.Exercise import Exercise
+from lop_codeingame_cli.model.Exercise import Exercise
 from abc import ABC, abstractmethod
 
 
