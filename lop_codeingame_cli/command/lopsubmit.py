@@ -48,6 +48,7 @@ def lopsubmit(
     except WebSocketBadStatusException:
         print('WebSocket connection failed: HTTP 403 Forbidden')
 
-
-if __name__ == '__main__':
+def run():
     typer.run(lopsubmit)
+if __name__ == '__main__':
+    run()

@@ -33,7 +33,8 @@ def lopgenerate(
     else:
         print(response.json()["detail"])
 
-
+def run():
+    typer.run(lopgenerate)
 
 if __name__ == '__main__':
-    typer.run(lopgenerate)
+    run()

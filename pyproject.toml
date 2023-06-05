@@ -20,9 +20,10 @@ clint = "^0.5.1"
 
 [tool.poetry.scripts]
 lopdownload = "lop_codeingame_cli.command.lopdownload:run"
+lopauth = "lop_codeingame_cli.command.lopauth:run"
+lopgenerate = "lop_codeingame_cli.command.lopgenerate:run"
+lopsubmit = "lop_codeingame_cli.command.lopsubmit:run"
 
-[options.entry_points]
-lopdownload = "lop_codeingame_cli.command.lopdownload:run"
 
 
 

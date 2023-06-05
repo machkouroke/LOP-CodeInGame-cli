@@ -43,6 +43,8 @@ def lopauth(
     else:
         print("Une erreur du serveur est survenue")
 
+def run():
+    typer.run(lopauth)
 
 if __name__ == '__main__':
     typer.run(lopauth)
