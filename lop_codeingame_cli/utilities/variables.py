@@ -1,6 +1,6 @@
 from pathlib import Path
 
-IS_LOCAL=True
+IS_LOCAL=False
 BASE="localhost:8000"
 BASE_REMOTE="lopcodeingame.herokuapp.com"
 APP_PATH: Path = Path("~/lopcodeingame").expanduser()
