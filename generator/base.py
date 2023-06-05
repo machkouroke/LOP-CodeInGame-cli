@@ -44,15 +44,15 @@ class AbstractGenerator(ABC):
         return self.config_path / "settings.json"
 
     def generate_metadata(self):
-        with open(self.settings_path, "w") as file:
+        with open(self.metadata_path, "w") as file:
             data = {
-                "id": self.exercise.id,
+                "exercise_id": self.exercise.id,
                 "owner": self.exercise.owner,
             }
             json.dump(data, file)
 
     def generate_settings(self):
-        with open(self.metadata_path, "w") as file:
+        with open(self.settings_path, "w") as file:
             data = {
                 "name": self.exercise.name,
                 "files": {

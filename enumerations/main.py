@@ -20,3 +20,7 @@ class ExerciseKind(Enum):
 
 class ProgramingLanguage(Enum):
     PYTHON = "Python"
+
+class SubmissionKind(Enum):
+    SOLVE = "solve"
+    TEMPLATE = "template"

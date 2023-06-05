@@ -3,8 +3,19 @@ import zipfile
 from pathlib import Path
 import json
 import requests
+from tqdm import tqdm
+from websocket import WebSocket
 
 from model.Exercise import Exercise
+
+def read_file_in_chunks(file_path: Path, chunk_size: int = 1024*1024):
+    with open(file_path, "rb") as file:
+        while True:
+            if chunk := file.read(chunk_size):
+                yield chunk
+            else:
+                break
+
 
 
 def to_zip(path: Path, zip_path: Path):
@@ -16,10 +27,19 @@ def to_zip(path: Path, zip_path: Path):
                 zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), path))
 
 
-def send_file_to_api(file_path: Path, api_url: str):
-    with open(file_path, "rb") as file:
-        response = requests.post(api_url, files={"file": file})
-    return response
+def send_file_to_api(base_path: Path, ws: WebSocket):
+    temp_path = Path("temp")
+    temp_path.mkdir(exist_ok=True)
+    zip_path = temp_path / "archive.zip"
+    to_zip(base_path, zip_path)
+    file_size = os.path.getsize(zip_path)
+    with tqdm(total=file_size, unit='B', unit_scale=True, desc="Uploading to serveur") as pbar:
+        for part in read_file_in_chunks(zip_path):
+            ws.send_binary(part)
+            pbar.update(len(part))
+    ws.close()
+    zip_path.unlink()
+    temp_path.rmdir()
 
 
 def download_file_from_api(user_id: str, competition_id: str):
@@ -29,16 +49,6 @@ def download_file_from_api(user_id: str, competition_id: str):
     return response.json()["download_link"]
 
 
-def package_folder(user_id: str, competition_id: str, kind: str):
-    temp_path = Path("temp")
-    temp_path.mkdir(exist_ok=True)
-    zip_path = temp_path / f"archive_{user_id}_{competition_id}.zip"
-    to_zip(Path(".."), zip_path)
-    response = send_file_to_api(zip_path,
-                                f"http://localhost:8000/cli/lopsubmit?user_id={user_id}"
-                                f"&competition_id={competition_id}&kind={kind}")
-    zip_path.unlink()
-    temp_path.rmdir()
 
 
 

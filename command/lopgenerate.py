@@ -1,4 +1,5 @@
 from enum import Enum
+from pprint import pprint
 from typing import Annotated
 
 import requests
@@ -26,7 +27,8 @@ def lopgenerate(
     if response.status_code == 200:
         try:
             data = Exercise(**response.json())
-            generator[data.language.value](exercise=data)
+            generator[data.language.value](exercise=data).generate()
+            print("Le répertoire a été créé avec succès")
         except FileExistsError:
             print("Le répertoire existe déjà")
     else:

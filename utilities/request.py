@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from utilities.variables import CONFIG_PATH
 
@@ -9,6 +10,10 @@ def get_token() -> str:
 
 def get_headers() -> dict:
     return {"Authorization": f"Bearer {get_token()}"} if get_token() else {}
+
+def get_exercise_id(base_path: Path) -> str:
+    with open(base_path / "metadata.json") as file:
+        return json.load(file)["exercise_id"]
 
 
 

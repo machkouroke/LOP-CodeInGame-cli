@@ -13,7 +13,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(main(), "Hello World")
 """
 class PythonGenerator(AbstractGenerator):
-    def __init__(self, path: str, exercise: Exercise):
+    def __init__(self, exercise: Exercise):
         super().__init__(exercise)
         self.main_content = main_content
         self.test_content = test_content
