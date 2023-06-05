@@ -26,6 +26,10 @@ def to_zip(path: Path, zip_path: Path):
             for file in files:
                 zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), path))
 
+def from_zip(zip_path: Path, path: Path):
+    with zipfile.ZipFile(zip_path, "r") as zipf:
+        zipf.extractall(path)
+
 
 def send_file_to_api(base_path: Path, ws: WebSocket):
     temp_path = Path("temp")

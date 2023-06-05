@@ -1,17 +1,14 @@
-import os
-
-from websocket import create_connection, WebSocketBadStatusException
 from pathlib import Path
 from typing import Annotated
-import tqdm
+
 import requests
 import typer
+from websocket import create_connection, WebSocketBadStatusException
 
-from command.lopgenerate import lopgenerate
 from enumerations.main import SubmissionKind
-from utilities.file import to_zip, read_file_in_chunks, send_file_to_api
+from utilities.file import send_file_to_api
 from utilities.request import get_headers, get_exercise_id
-from utilities.variables import get_base_url, get_web_socket_url
+from utilities.variables import get_web_socket_url
 
 
 def send_files_to_server(config_file_path: str, main_file_path, test_file_path, server_url):

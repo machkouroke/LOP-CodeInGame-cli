@@ -1,7 +1,10 @@
 import json
 from pathlib import Path
 
-from utilities.variables import CONFIG_PATH
+import requests
+
+from model.Exercise import Exercise
+from utilities.variables import CONFIG_PATH, get_base_url
 
 
 def get_token() -> str:
@@ -15,6 +18,9 @@ def get_exercise_id(base_path: Path) -> str:
     with open(base_path / "metadata.json") as file:
         return json.load(file)["exercise_id"]
 
+def get_exercise_data(exercise_id: str) -> Exercise:
+    response = requests.get(f"{get_base_url()}/exercises/{exercise_id}", headers=get_headers())
+    return Exercise(**response.json())
 
 
 # if __name__ == '__main__':

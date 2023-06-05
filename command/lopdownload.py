@@ -1,9 +1,13 @@
-from enumerations import Enum
+from pathlib import Path
+
+from enum import Enum
 from typing import Annotated
 
 import requests
 import typer
 
+from utilities.file import from_zip
+from utilities.request import get_exercise_data, get_headers
 from utilities.variables import get_base_url
 
 
@@ -13,47 +17,34 @@ class DownloadKind(str, Enum):
 
 
 def lopdownload(
-        kind: Annotated[DownloadKind ,typer.Option(..., help="Le type de fichier à télécharger")] = DownloadKind.template,
-        path: Annotated[str, typer.Option(..., help="Le chemin du fichier à télécharger")] = '.'
+
+        exercise_id: Annotated[str,typer.Option(..., help="Id de l'exercise")],
 ):
-    print(f"Le type de fichier à télécharger est {kind}")
-    response = requests.post(
-        f"{get_base_url()}/auth/login",
-        json={"mail": mail, "password": password},
+    exercise = get_exercise_data(exercise_id)
+    base_path = Path(exercise.name).absolute()
+    base_path.mkdir(exist_ok=True)
+    response = requests.get(
+        f"{get_base_url()}/cli/lopdownload?exercise_id={exercise_id}",
+        headers=get_headers(),
     )
-    # if args.kind == 'étudiant':
-    #     print(f"Téléchargement du fichier '{args.name}' en tant qu'étudiant...")
-    #     repertoire_local = args.directory
-    #     chemin_fichier = os.path.join(repertoire_local, args.name)
-    #     if os.path.exists(chemin_fichier):
-    #         #url distant du serveur à compléter
-    #         url_distant ='http://localhost:8080/upload'
-    #         with open(chemin_fichier, 'rb') as file:
-    #             response = requests.post(url_distant, files={'file': file})
-    #         if response.status_code == 200:
-    #             print(f"Le fichier '{args.name}' a été téléchargé avec succès en tant qu'étudiant.")
-    #         else:
-    #             print("Erreur lors de l'envoi du fichier au serveur distant.")
-    #     else:
-    #         print("Le fichier spécifié n'existe pas.")
-    # elif args.kind == 'professeur':
-    #     print(f"Téléchargement du fichier '{args.name}' en tant que professeur...")
-    #     repertoire_local = args.directory
-    #     chemin_fichier = os.path.join(repertoire_local, args.name)
-    #     if os.path.exists(chemin_fichier):
-    #         # url distant du serveur à compléter
-    #         url_distant = 'http://localhost:8080/upload'
-    #         with open(chemin_fichier, 'rb') as file:
-    #             response = requests.post(url_distant, files={'file': file})
-    #             print("bye")
-    #         if response.status_code == 200:
-    #             print(f"Le fichier '{args.name}' a été téléchargé avec succès en tant qu'étudiant.")
-    #         else:
-    #             print("Erreur lors de l'envoi du fichier au serveur distant.")
-    #     else:
-    #         print("Le fichier spécifié n'existe pas.")
-    # else:
-    #     print("Valeur invalide pour l'option --kind. Veuillez spécifier 'étudiant' ou 'professeur'.")
+    if response.status_code == 200:
+        extract_zip_file(response, base_path)
+    else:
+        print("Une erreur est survenue lors du téléchargement du fichier: " + response.json()["detail"])
+
+
+# TODO Rename this here and in `lopdownload`
+def extract_zip_file(response, base_path):
+    download_link = response.json()["download_link"]
+    response = requests.get(download_link, stream=True)
+    zip_path = base_path / "archives.zip"
+    with open(zip_path, "wb") as file:
+        file.write(response.content)
+    from_zip(zip_path, base_path)
+    zip_path.unlink()
+    print(f"Le fichier a été téléchargé dans {base_path}")
+
+
 
 if __name__ == '__main__':
     typer.run(lopdownload)
